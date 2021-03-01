@@ -759,16 +759,18 @@
    <soapenv:Body>\r
       <tem:GetLastUpdateDate/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/GetLastUpdateDate"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="3207c30a-ec30-4066-81de-0930810e5da4" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="bf046f1a-e5c7-4000-979a-0e7bbe4cd64e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="request" id="6f57e819-a21e-4ad6-8dbd-6310d4a256e7" name="Requestcurrencyrate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConverterSoap</con:interface><con:operation>GetCurrencyRate</con:operation><con:request name="Requestcurrencyrate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7c153dd6-7ab6-480f-92d4-bb67c92d38c4"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://currencyconverter.kowabunga.net/converter.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <tem:GetCurrencyRate>\r
-         <!--Optional:-->\r
-         <tem:Currency>?</tem:Currency>\r
-         <tem:RateDate>?</tem:RateDate>\r
-      </tem:GetCurrencyRate>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="89ba96c2-71f9-4782-8d44-7c57c0c95bd2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/GetCurrencyRate"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="f0af1095-4851-41cf-867c-8551b6f77a51"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner;
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/GetLastUpdateDate"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="ece55d52-c31a-4d8d-aa1c-befe8278923d" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="53ba8492-cc95-4eef-bda7-d476c2a3dbf5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="request" id="86b887d4-2004-453e-864a-bbab439e7a46" name="Request1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConverterSoap</con:interface><con:operation>GetConversionRate</con:operation><con:request name="Request1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="b50fc863-1a47-4860-96f3-7d94f17dbe3e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://currencyconverter.kowabunga.net/converter.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetConversionRate>
+         <!--Optional:-->
+         <tem:CurrencyFrom>${#Project#fc}</tem:CurrencyFrom>
+         <!--Optional:-->
+         <tem:CurrencyTo>${#Project#tc}</tem:CurrencyTo>
+         <tem:RateDate>${#Project#date}</tem:RateDate>
+      </tem:GetConversionRate>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="80997670-39c5-4ba0-a362-a2bd01c23704" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/GetConversionRate"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script 1" id="99209274-02f3-4a96-afe9-3f9cb023577e"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestRunContext;
 import com.eviware.soapui.support.GroovyUtils;
 //set values to properties
@@ -776,11 +778,14 @@ def tc=testRunner.testCase;
 tc.setPropertyValue("fc","INR");
 tc.setPropertyValue("tc","AUD");
 tc.setPropertyValue("date","2021-02-24T00:00:00");
-def ts=tc.getTestStepByName("RequestCurrencyrate");
+def ts=tc.getTestStepByName("Request1");
 testRunner=new WsdlTestCaseRunner(tc,null);
 testStepContext=new WsdlTestRunContext(ts);
 //submit parameterised request to service and store response
 ts.run(testRunner,testStepContext);
 def res=ts.getPropertyValue("response");
 def gu=new GroovyUtils(context);
-def holder=</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>fc</con:name><con:value>AUD</con:value></con:property><con:property><con:name>tc</con:name><con:value>INR</con:value></con:property><con:property><con:name>2021-02-24T00:00:000</con:name><con:value>2021-02-24T00:00:00</con:value></con:property><con:property><con:name>date</con:name><con:value>2021-02-24T00:00:00</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+def holder=gu.getXmlHolder(res);
+def output=holder.getNodeValue("//*:GetConversionRateResult");
+log.info(output);</script></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="48af34c4-b7d3-4476-b9ed-f5149413a89e"><con:settings/><con:config><script/></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script2" id="05dc9612-e958-4847-8228-82d29cdcd54c"><con:settings/><con:config><script>log.info("hi")
+</script></con:config></con:testStep><con:properties><con:property><con:name>fc</con:name><con:value>INR</con:value></con:property><con:property><con:name>tc</con:name><con:value>AUD</con:value></con:property><con:property><con:name>date</con:name><con:value>2021-02-24T00:00:00</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>fc</con:name><con:value>AUD</con:value></con:property><con:property><con:name>tc</con:name><con:value>INR</con:value></con:property><con:property><con:name>2021-02-24T00:00:000</con:name><con:value>2021-02-24T00:00:00</con:value></con:property><con:property><con:name>date</con:name><con:value>2021-02-24T00:00:00</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
